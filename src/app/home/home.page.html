@@ -1,44 +1,216 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Home
+    </ion-buttons> -->
+    <ion-button slot="start" *ngIf="register" (click)="backToLogin()" color="light" >
+        <ion-icon  color="dark" name="arrow-round-back"></ion-icon>
+
+    </ion-button>
+
+    <ion-title slot="end" >
+      {{login}}
     </ion-title>
+    
   </ion-toolbar>
+  
 </ion-header>
 
-<ion-content>
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
-</ion-content>
+
+ 
+  
+  <ion-content>
+    <div *ngIf="croppingOptions">
+    <ion-item>
+       
+            <ion-button ion-button color="danger" slot="start" (click)="reset()">Reset</ion-button>
+         
+       
+            <ion-button ion-button icon-only slot="end" color="danger" (click)="clear()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+            <ion-button ion-button icon-only slot="start" color="secondary" (click)="save()">
+              <ion-icon name="checkmark"></ion-icon>
+            </ion-button>
+         
+    </ion-item>
+    <angular-cropper #angularCropper [cropperOptions]="cropperOptions" [imageUrl]="myImage" *ngIf="myImage"></angular-cropper>
+
+  <ion-row *ngIf="myImage">
+    <ion-col col-3>
+      <ion-button size="small"  color="primary" (click)="zoom(true)">
+          <ion-icon name="add-circle-outline"></ion-icon> 
+      </ion-button>
+    </ion-col>
+    
+    <ion-col col-3>
+      <ion-button size="small"  color="primary" (click)="zoom(false)">
+          <ion-icon name="remove-circle-outline"></ion-icon> 
+      </ion-button>
+    </ion-col>
+    <ion-col col-3>
+      <ion-button size="small"  (click)="rotate()">
+          <ion-icon name="refresh"></ion-icon> 
+      </ion-button>
+    </ion-col>
+    <ion-col col-3>
+        <ion-button clear size="small" (click)="scaleY()">
+          Flip
+        </ion-button>
+      </ion-col> 
+  </ion-row>
+  <ion-row *ngIf="myImage">
+     <!-- <ion-col col-2>
+      <ion-button clear (click)="scaleX()">
+        Flip X
+      </ion-button>
+    </ion-col> -->
+   
+
+    <ion-col col-2>
+      <ion-button size="small" clear icon-only (click)="move(0, -10)">
+        <ion-icon name="arrow-round-up"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col col-2>
+      <ion-button size="small" clear icon-only (click)="move(0, 10)">
+        <ion-icon name="arrow-round-down"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col col-2>
+      <ion-button size="small" clear icon-only (click)="move(-10, 0)">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col col-2>
+      <ion-button size="small" clear icon-only (click)="move(10, 0)">
+        <ion-icon name="arrow-round-forward"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- <ion-card *ngIf="croppedImage">
+    <ion-card-header>My Result</ion-card-header>
+    <ion-card-content>
+      <img [src]="croppedImage">
+    </ion-card-content>
+  </ion-card> -->
+
+  </div >
+    <ion-card>
+      <!-- <ion-card-header>
+         <ion-title class="ion-text-center" >{{login}}</ion-title>
+      </ion-card-header> -->
+      
+    <form [formGroup]="user" *ngIf="!register" >
+      <ion-row>
+        <ion-col  size="12">
+            <ion-avatar class="avatar"  >
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar>
+       
+        </ion-col>
+      </ion-row>
+          <ion-row>
+            
+            <ion-col class="ion-text-center avatar">
+                <ion-item style="width:80%;margin: auto">
+                    <ion-input  type="text" placeholder="Email" formControlName="name"></ion-input>
+                 </ion-item>
+            </ion-col>   
+          </ion-row>
+         
+       <ion-row>
+         <ion-col>
+            <ion-item style="width:80%;margin: auto">
+                <ion-input type="password"  placeholder="Password" formControlName="password"></ion-input>
+               </ion-item>
+         </ion-col>
+       </ion-row>
+       
+       
+        
+  </form>
+  <form *ngIf="register" [formGroup]="userReg">
+      <ion-row>
+          <!-- <ion-item>
+              <ion-label id="profile_image" color="primary" stacked>Profilbild wählen</ion-label>
+              <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input>
+            </ion-item> -->
+          <ion-col  size="12">
+              <ion-avatar *ngIf="croppedImage" class="avatar"  >
+                  <label for="file">
+                      <i class="ion-images"></i>
+                      <input type="file" formControlname="profiePic" id="file" style="display: none" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" (change)="changeListener($event)" data-original-title="upload photos">
+                  <img  [src]="croppedImage">
+                    
+                    </label>
+                  <!-- <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input> -->
+                </ion-avatar>
+                <ion-avatar *ngIf="!croppedImage" class="avatar"  >
+                    <label for="file">
+                        <i class="ion-images"></i>
+                        <input type="file" formControlname="profiePic" id="file" style="display: none" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" (change)="changeListener($event)" data-original-title="upload photos">
+                    <!-- <img  src=" https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> -->
+                   
+                      <ion-icon class="ion-iconUpload" name="camera" padding></ion-icon>
+                      </label>
+                    <!-- <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input> -->
+                  </ion-avatar>
+
+          </ion-col>
+        </ion-row>
+        <br>
+      <ion-row *ngIf="register">
+        
+          <ion-col class="ion-text-center avatar">
+              <ion-item style="width:80%;margin: auto">
+                  <ion-input  type="text" placeholder="Name" formControlName="fname"></ion-input>
+               </ion-item>
+          </ion-col>   
+        </ion-row>
+        <ion-row>
+            
+            <ion-col class="ion-text-center avatar">
+                <ion-item style="width:80%;margin: auto">
+                    <ion-input  type="text" placeholder="Email" formControlName="name"></ion-input>
+                 </ion-item>
+            </ion-col>   
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                 <ion-item style="width:80%;margin: auto">
+                     <ion-input type="password"  placeholder="Password" formControlName="password"></ion-input>
+                    </ion-item>
+              </ion-col>
+            </ion-row>
+
+        <ion-row *ngIf="register">
+            <ion-col>
+               <ion-item style="width:80%;margin: auto">
+                   <ion-input type="password"  placeholder="Confirm Password" formControlName="confirmPassword"></ion-input>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="register">
+           </ion-row>
+
+         
+
+  </form>
+  
+  <ion-row>
+      <ion-col >
+            <ion-button [disabled]=""  style="width:80%;margin: auto" expand="block" (click)="onSubmit()">Submit</ion-button>
+     </ion-col>
+   </ion-row>
+   <br>
+   <ion-row *ngIf="!register" style="width:80%;margin: auto">
+       <ion-label class="ion-text-center">
+           <a (click)="regestration()"><h2>Register here</h2></a>
+         </ion-label>
+   </ion-row>
+
+</ion-card>
+  </ion-content>
+  

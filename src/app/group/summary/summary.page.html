@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+        <ion-button color="light" (click)="back()">
+            <ion-icon herf ="" icon="arrow-back"></ion-icon>
+        </ion-button>
+          
+        <ion-icon color="danger" name="clipboard"></ion-icon>
+        <ion-title color="danger">Summary</ion-title>
+    </ion-item>
+     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   
+    <ion-card>
+     <ion-card-header>
+       <ion-card-title style="text-align:center" ><span style="color:red">Total Expenses &nbsp; &nbsp;  &#8377;</span>{{total}}</ion-card-title>
+     </ion-card-header> 
+     <ion-card-content>
+        <ion-row >
+            <ion-col size="4">
+                <ion-item>
+                    <ion-label>Name</ion-label>
+                  </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label>Expense</ion-label>
+                  </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item >
+                    <ion-label color="danger">Give/Get</ion-label>
+                  </ion-item>
+            </ion-col>
+           </ion-row>
+       <ion-row *ngFor="let exp of expense">
+        <ion-col size="4">
+            <ion-item>
+                <ion-label>{{exp.name}}</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label>{{exp.share  | number:'2.1-1'}}</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item *ngIf="exp.totals>=0" >
+                <ion-label color="success">+{{exp.totals | number:'2.1-1' }}</ion-label>
+              </ion-item>
+              <ion-item *ngIf="exp.totals<0" >
+                  <ion-label color="danger">{{exp.totals | number:'2.1-1'}}</ion-label>
+                </ion-item>
+        </ion-col>
+       </ion-row>
+      
+     </ion-card-content>
+    </ion-card>
+   
+</ion-content>

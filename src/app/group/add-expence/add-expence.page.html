@@ -1,0 +1,64 @@
+
+
+
+<ion-content>
+    <!-- <ion-icon  color="dark" name="arrow-back" (click)="backTogroup()"></ion-icon> -->
+    
+  
+  <ion-card s >
+    <ion-card-header>
+      
+      <!-- <ion-card-title style="text-align: center" color="success">
+       Add Expense 
+           </ion-card-title> -->
+          
+    </ion-card-header> 
+     <ion-card-content padding>
+       <form [formGroup]="userForm">
+
+      
+       <ion-item>
+         <ion-label style="font-size: 30px" slot="start" > &#8377;</ion-label>
+         <ion-input formControlName="amount" type="number" ></ion-input>
+       </ion-item>
+       <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-input formControlName="description" type="text" ></ion-input>
+        </ion-item>
+      
+        <ion-list>
+          <ion-radio-group name="auto" (ionChange)="showSelectValue($event.detail.value)" >
+            <ion-list-header>Expence Shares</ion-list-header>
+            <ion-item>
+                <ion-icon slot="start" color="success" name="contacts"></ion-icon>
+              <ion-label>Given Equal</ion-label>
+              <ion-radio value="equal" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+             <ion-icon slot="start" color="success" name="person"></ion-icon>
+              <ion-label>Given Individual</ion-label>
+              <ion-radio value="individual"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-icon slot="start" color="success" name="add-circle-outline"></ion-icon>
+                <ion-label>Custom</ion-label>
+                <ion-radio value="custom"></ion-radio>
+              </ion-item>
+
+          </ion-radio-group>
+
+        </ion-list>
+        <ion-item *ngIf="isCustom" >
+            <ion-label>Select Contributors</ion-label>
+            <ion-select multiple="true" ok-text="Okay" cancel-text="Nah"  (ionChange)="showSelectedUserValue($event.detail.value,$event)">
+              <ion-select-option [value]="user" *ngFor="let user of users">{{user.name}}</ion-select-option>
+          
+            </ion-select>
+            
+          </ion-item>
+        </form>
+          <ion-button expand="block" (click)="addExpence()">Add</ion-button>
+          
+     </ion-card-content>
+  </ion-card>
+</ion-content>

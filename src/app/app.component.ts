@@ -3,6 +3,10 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
+import { AuthGuardService } from './auth-guard.service';
+import { AuthService } from './auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -11,21 +15,28 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
+      title: 'Profile',
+      url: '/profile',
+      icon:"person" 
     },
     {
-      title: 'List',
+      title: 'Groups',
       url: '/list',
-      icon: 'list'
-    }
+      icon: 'md-people'
+    },
+    // {
+    //   title: 'Logout',
+    //   url: '',
+    //   icon: 'log-out'
+    // }
   ];
-
+  
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router:Router,
+ 
   ) {
     this.initializeApp();
   }
@@ -34,6 +45,15 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
+  
+      
     });
+   
+  }
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['../home'])
+   
   }
 }

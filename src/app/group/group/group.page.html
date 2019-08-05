@@ -1,0 +1,32 @@
+<ion-router-outlet><ion-router-outlet>
+<ion-header>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+ 
+<ion-toolbar color="tertiary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-avatar class="ion-avatar1"   slot="start"> 
+     
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+  <ion-title >
+   {{group.name}}
+  </ion-title>
+</ion-toolbar>
+</ion-header>
+<ion-tabs padding>
+<!-- Tab bar -->
+<ion-tab-bar slot="bottom">
+  <ion-tab-button tab="mambers">
+    <ion-icon name="contact"></ion-icon>
+  </ion-tab-button>
+  <ion-tab-button tab="expences">
+     <i  class="fa fa-rupee"></i>
+  </ion-tab-button>
+  <ion-tab-button tab="summary">
+    <ion-icon name="calculator"></ion-icon>
+  </ion-tab-button>
+</ion-tab-bar>
+</ion-tabs>

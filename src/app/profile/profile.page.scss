@@ -1,0 +1,36 @@
+ion-item,ion-toolbar{
+margin-bottom: 0;
+background-color:#3171e0
+}
+
+.bg{
+   // --background-image: url(url);
+    height: 300px;
+    background-size: cover;
+    filter: blur(5px);
+    background-position: center center;
+    
+
+}
+.main-cnt{
+    width: 100%;
+    height: 700px;
+    padding:20px;
+    
+}
+.dp{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    z-index: 10;
+    margin-top:-70px;
+    position: relative;
+    left:50%;
+    margin-right:-50%;
+    transform: translate(-50%,-50%);
+    box-shadow: -6px 15px 81px 3px rgba(0,0,0,0.75);
+}
+ion-icon{
+    font-size: 30px;
+    
+}
