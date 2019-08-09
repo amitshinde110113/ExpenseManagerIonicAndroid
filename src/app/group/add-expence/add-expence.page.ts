@@ -1,4 +1,4 @@
-import { Component,NgZone , OnInit, ɵsetClassMetadata } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ToastController, AlertController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,7 +16,7 @@ export class AddExpencePage implements OnInit {
   users:any=JSON.parse(localStorage.getItem('group')).users;curentuser:any=[]
   group_ID:any=JSON.parse(localStorage.getItem('group'))._id
   constructor(private route:ActivatedRoute,
-    private ngZone:NgZone,
+    
     private fb:FormBuilder,
     private toaster:ToastController,
     private router:Router,
@@ -166,18 +166,21 @@ export class AddExpencePage implements OnInit {
       
       this.httpService.createExpense(expenseData).subscribe(res=>{
         console.log("response ===>",res);
-      
-      
-   this.router.navigate(['../viewgroup/expences'])
+          this.userForm.reset();
+          this.presentToast("Expense added","success");
+   this.router.navigate(['../viewgroup/expences']);
   // this.router.navigate(['../viewgroup/expences']).then(() => window.location.reload());
   
+      },err=>{
+        this.presentToast("Oops..Something went wrong..!","danger");
+
       })
       }
       else{
-        this.presentToast( 'Expence amount and description required')
+        this.presentToast( 'Expence amount and description required','danger')
       }
     }catch(e){
-      this.presentToast('Please select contributors')
+      this.presentToast('Please select contributors',"danger")
     }
    
   }
@@ -189,10 +192,10 @@ export class AddExpencePage implements OnInit {
 
 
   ////////////////////////ALERT///////////////////////////
-  async presentToast(msg) {
+  async presentToast(msg,color) {
     const toast = await this.toaster.create({
-      position:'middle',
-      color:'danger',
+      position:'top',
+      color:color,
       message: msg,
       duration: 2000
     });
@@ -247,7 +250,7 @@ export class AddExpencePage implements OnInit {
        
            }else{
              
-            this.presentToast("Total amount and shares must equal")
+            this.presentToast("Total amount and shares must equal","danger")
            }
            
             

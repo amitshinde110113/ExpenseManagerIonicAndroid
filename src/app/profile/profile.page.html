@@ -17,15 +17,18 @@
     <div class="bg" [style.background-image]="'url(' + url + ')'" style="image-orientation: 180deg;">
       </div>
     
-      <div class="main-cnt" >
-        <ion-avatar class="dp">
-            <ion-img class="" [src]='url' ></ion-img>
+      <div class="main-cnt"  >
+        <ion-avatar class="dp"  >
+            <!-- <img-loader [src]='url' (load)="onImageLoad($event)" ></img-loader> -->
+            <ion-img id="prop" class="" [src]='url'   ></ion-img>
+           
         </ion-avatar>
   
       
      
         <ion-card-header>
             <ion-card-title style="font-size:30px" class="ion-text-center">{{user.name}}</ion-card-title>
+            <!-- <ion-card-title style="font-size:30px" class="ion-text-center">{{url}} '''ffffffffffff'''''</ion-card-title> -->
          
         </ion-card-header>
         
@@ -35,6 +38,7 @@
                 <ion-icon slot="start" color="primary" name="contact"></ion-icon> 
                 <ion-label slot="start">Name</ion-label>
                 <ion-label > &nbsp; &nbsp; &nbsp; {{user.name}}</ion-label>
+
               </ion-item>
               <ion-item >
                   <ion-icon slot="start" color="primary" name="mail"></ion-icon>

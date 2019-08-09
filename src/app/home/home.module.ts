@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { HomePage } from './home.page';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Crop } from '@ionic-native/crop/ngx';
 import { AngularCropperjsModule } from 'angular-cropperjs';
@@ -27,6 +27,6 @@ import { File } from '@ionic-native/file/ngx'
       }
     ])
   ],
-  declarations: [HomePage],providers:[AuthService,Crop,ToastController,File]
+  declarations: [HomePage],providers:[AuthService,Crop,ToastController,File,HttpClient]
 })
 export class HomePageModule {}

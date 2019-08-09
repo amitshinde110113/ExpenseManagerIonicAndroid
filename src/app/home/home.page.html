@@ -20,7 +20,8 @@
  
   
   <ion-content>
-    <div *ngIf="croppingOptions">
+    <!-- croppingOptions -->
+    <div *ngIf=" cropper">
     <ion-item>
        
             <ion-button ion-button color="danger" slot="start" (click)="reset()">Reset</ion-button>
@@ -102,7 +103,8 @@
          <ion-title class="ion-text-center" >{{login}}</ion-title>
       </ion-card-header> -->
       
-    <form [formGroup]="user" *ngIf="!register" >
+    <form [formGroup]="user" *ngIf="!register" style="margin-top: 2cm" >
+       
       <ion-row>
         <ion-col  size="12">
             <ion-avatar class="avatar"  >

@@ -24,15 +24,16 @@
     </ion-card-content> 
   
   </ion-card> -->
+  
   <ion-list>
       <ion-list-header>
         Group Members
       </ion-list-header>
 
-      <ion-item *ngFor="let user of users; index as i">
+      <ion-item *ngFor="let user of url; index as i">
         <!-- <ion-avatar slot="start"> -->
             <ion-thumbnail slot="start">
-                <img [src]="url[i]">
+                <img [src]="user.url">
 
             </ion-thumbnail>
            

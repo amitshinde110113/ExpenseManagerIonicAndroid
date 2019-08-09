@@ -3,9 +3,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../http.service';
 import { ToastController } from '@ionic/angular';
-import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts/ngx';
+import { LoadingController } from '@ionic/angular';
 
-import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-group',
@@ -14,7 +13,7 @@ import { Platform } from '@ionic/angular';
 })
 export class CreateGroupComponent implements OnInit {
 user:FormGroup;members=[];isMember=false;contactlist
-  constructor(private contacts:Contacts,private platform: Platform,private toaster:ToastController,private fb:FormBuilder,private router:Router,private httpService:HttpService) { 
+  constructor(private loadingController:LoadingController,private toaster:ToastController,private fb:FormBuilder,private router:Router,private httpService:HttpService) { 
     //this.platform.backButton.subscribe(() => { console.log("TEST"); });
     //this.platform.backButton.subscribe(()=>{ navigator['app'].exitApp();}
   }
@@ -41,17 +40,33 @@ user:FormGroup;members=[];isMember=false;contactlist
     
   }
 onSubmit(){
-  let data={members:this.members,
-  name:this.user.get('name').value}
-  this.httpService.createGroup(data).subscribe(res=>{
-    this.router.navigate(['../list'])
+  if((this.user.get("name").value)!==""){
+    this.presentLoadingWithOptions(1000);
+    let  temp=[]
+     this.members.map(ele=>{
+         temp.push(ele._id)
+     })
+     let data={members:this.members,
+       mm:temp,
+     name:this.user.get('name').value}
+     this.httpService.createGroup(data).subscribe(res=>{
+       this.presentToast("Group created","success")
+       this.router.navigate(['../list'])
+   
+      // this.router.navigate(['../list'])
+     },err=>{
+       this.presentToast("Oops..Something went wrong","danger")
+     })
 
-   // this.router.navigate(['../list'])
-  })
+  }else{
+    this.presentToast("Oops..Please add group name","danger")
+  }
+ 
 
 
 }
 onAddMember(){
+  this.presentLoadingWithOptions(300);
   let data={member:this.user.get('member').value}
   this.httpService.checkMember(data).subscribe((res:any)=>{
     console.log("member available",res);
@@ -65,19 +80,31 @@ onAddMember(){
     this.user.patchValue({member:''})
         
   },err=>{
-    this.presentToast()
+    this.presentToast('Member not found.',"danger")
   })
   
   
 }
 
-async presentToast() {
+async presentToast(msg,color) {
   const toast = await this.toaster.create({
-    message: 'Member not found.',
+    message: msg,
     duration: 2000,
     position: 'top',
-    color:'danger'
+    color:color
   });
   toast.present();
 }
+async presentLoadingWithOptions(duration) {
+  const loading = await this.loadingController.create({
+    spinner: "lines-small",
+    duration: duration,
+    message: 'Please wait...',
+    showBackdrop:true,
+    translucent: true,
+    cssClass: 'custom-class custom-loading'
+  });
+  return await loading.present();
+}
+
 }

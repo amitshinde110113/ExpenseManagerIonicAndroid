@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -9,7 +9,8 @@ import { ToastController } from '@ionic/angular';
 import { CropperComponent } from 'angular-cropperjs';
 //import { Base64 } from '@ionic-native/base64/ngx';
 import { File } from '@ionic-native/file/ngx'
-import { Crop } from '@ionic-native/crop/ngx';
+import { LoadingController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -28,18 +29,23 @@ user:FormGroup
 userReg:FormGroup
 imageselection
 register=false;
+cropper=false
 login="Login"
 url
   constructor(
-     private file: File,
+     
+    
+    
      private toaster:ToastController,
      private fb:FormBuilder,
      private fb2:FormBuilder,
+     private loadingController:LoadingController,
      private authService:AuthService,
      private router:Router,
      private alertControl:AlertController) {
 
       this.initilizeForms();
+      localStorage.clear()
   }
   ngOnInit(): void {
     
@@ -67,7 +73,20 @@ url
       autoCropArea: 0.8,
     };
   }
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: "lines-small",
+      duration: 1200,
+      message: 'Please wait...',
+      showBackdrop:true,
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
   onSubmit(){
+
+    this.presentLoadingWithOptions();
     this.croppingOptions=false
     let pwd = this.user.get('password').value
     const inputeData=new FormData();
@@ -84,14 +103,25 @@ url
       inputeData.append("profiePic",this.userReg.get('profiePic').value)
      // console.log(this.userReg.get('profiePic').value);
       this.authService.signUp(inputeData).subscribe((res:any)=>{
-        localStorage.setItem('token',res.Token)
-        localStorage.setItem('user',res.user)
-        this.authService.loggedIn(res.Token)
-       this.presentToast()
+        this.userReg.reset()
+        this.register=false
+        this.cropper=false
+        this.croppedImage=""
+        this.presentToast("Regetered successfully","success")
+        this.router.navigate(['../list'])
+        // localStorage.setItem('token',res.Token)
+        // localStorage.setItem('user',res.user)
+        // this.authService.loggedIn(res.Token)
+      /// this.presentToast()
         
          //console.log(res);
          this.router.navigate(['../list'])
+       }, err=>{
+         console.log("1");
+         
+        this.presentToast("Oops..Please try again..!","danger")
        })
+     
 
     }
     else{ 
@@ -99,25 +129,37 @@ url
         
       localStorage.setItem('token',res.Token)
       localStorage.setItem('user',res.user)
-     // this.authService.loggedIn(res.Token)
-     this.presentToast()
+      
+     //this.authService.loggedIn(res.Token)
+     
+     this.presentToast("Logged In","success")
+     this.router.navigate(['../list'])
       
       // console.log(res);
-       this.router.navigate(['../list'])
+      // this.router.navigate(['../list'])
+     },err=>{
+     this.presentToast("Oops..Please try again..!","danger")
+
      })
+     
+
     }
     
    console.log(this.user.get('name').value);
     }
-    async presentToast() {
+
+
+    async presentToast(msg,color) {
       const toast = await this.toaster.create({
-        message: 'Logged In successfully.',
+        message: msg,
         duration: 2000,
         position: 'top',
+        color:color
       });
       toast.present();
     }
     regestration(){
+      this.cropper=true
       this.register=true;
       this.login='Register'
     }
@@ -131,18 +173,18 @@ url
       if(event.target.files.length>0){
          this.imageselection=true;
          const img=event.target.files[0];
-         this.userReg.patchValue({profiePic:img})
+        // this.userReg.patchValue({profiePic:img})
             if (event.target.files && event.target.files[0]) {
               var reader = new FileReader();
               reader.readAsDataURL(event.target.files[0]); // read file as data url
               reader.onload = (event) => { 
               console.log(this.url);
               this.myImage=reader.result
-              this.url = reader.result;
+             /// this.url = reader.result;
               }
       }
     }
-  // console.log(this.userReg.get('profiePic').value)
+
      
     }  
 
@@ -171,37 +213,16 @@ url
    
     
     save() {
-      let croppedImgB64String: string = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/jpeg',);
+      let croppedImgB64String: string = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.5);
      this.angularCropper.cropper.getCroppedCanvas().toBlob((blob)=>{
-          const blob1 = new Blob([blob], { type: 'image/jpeg' });
-     // const imageFile =new File([blob1], (this.userReg.get('profiePic').value).name, { type: 'image/jpeg' });
-          
-          
-        //  console.log("new generated",imageFile);
-         this.userReg.patchValue({profiePic:blob1})
-        //  this.file.
-      });
-
-      this.croppedImage = croppedImgB64String;
-      
-      //const imageBlob = this.dataURItoBlob(this.croppedImage);
-    //  const imageFile = new File([imageBlob], (this.userReg.get('profiePic').value).name, { type: 'image/jpeg' });
-     // this.userReg.patchValue({profiePic:imageFile})
-      //console.log(imageFile);
-
-      
-
-    }
-  //   dataURItoBlob(dataURI) {
+     this.userReg.patchValue({profiePic:blob}) 
+     console.log(croppedImgB64String);
      
-  //     const byteString = window.atob(dataURI.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
-  //     const arrayBuffer = new ArrayBuffer(byteString.length);
-  //     const int8Array = new Uint8Array(arrayBuffer);
-  //     for (let i = 0; i < byteString.length; i++) {
-  //       int8Array[i] = byteString.charCodeAt(i);
-  //     }
-  //     const blob = new Blob([int8Array], { type: 'image/jpeg' });    
-  //     return blob;
-  //  }
-    
+    this.croppedImage = croppedImgB64String;
+     
+      },'image/jpeg',0.4);
+      console.log(croppedImgB64String);
+      this.cropper=false   
+    }  
+  
 }

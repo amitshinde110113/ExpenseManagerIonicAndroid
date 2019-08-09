@@ -5,9 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { ListPage } from './list.page';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HttpClient} from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { HttpService } from '../http.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { HttpService } from '../http.service';
     ])
   ],
   declarations: [ListPage],
-  providers:[AuthService,HttpService]
+  providers:[AuthService,HttpService,NativeStorage,HttpClient]
 })
 export class ListPageModule {}

@@ -9,10 +9,10 @@ import { ExpensesPage } from './expenses.page';
 import { ToastController } from '@ionic/angular';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ExpensesPage
-  }
+  // {
+  //   path: '',
+  //   component: ExpensesPage
+  // }
 ];
 
 @NgModule({

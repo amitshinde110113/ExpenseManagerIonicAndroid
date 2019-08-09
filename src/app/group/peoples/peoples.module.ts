@@ -6,12 +6,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PeoplesPage } from './peoples.page';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PeoplesPage
-  }
+  // {
+  //   path: '',
+  //   component: PeoplesPage
+  // }
 ];
 
 @NgModule({
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PeoplesPage]
+  declarations: [PeoplesPage],
+  providers:[NativeStorage]
 })
 export class PeoplesPageModule {}

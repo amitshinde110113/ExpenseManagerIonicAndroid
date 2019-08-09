@@ -4,8 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { AuthGuardService } from './auth-guard.service';
-import { AuthService } from './auth.service';
+
 
 
 @Component({

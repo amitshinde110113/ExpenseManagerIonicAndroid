@@ -37,17 +37,7 @@ const routes: Routes = [
     canActivate:[AuthGuardService]
 
   }
-  ,{
-    path:'viewgroup',
-    component:GroupPage,
-    children:[
-     { path: '', redirectTo: 'expences', pathMatch: 'full'},
-     {path:'mambers',component:PeoplesPage, canActivate:[AuthGuardService]} ,
-     {path:'expences',component:ExpensesPage, canActivate:[AuthGuardService]},
-     {path:'addexpences',component:AddExpencePage, canActivate:[AuthGuardService]} ,
-     
-  ],
-  },
+  ,
   {
     path:'profile',
     component:ProfilePage,

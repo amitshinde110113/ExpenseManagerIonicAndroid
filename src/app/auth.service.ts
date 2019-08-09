@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {  Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,11 @@ export class AuthService {
   }
 
 
-  baseUrl='http://192.168.0.134:3000/users/';
+  //  baseUrl='http://192.168.0.134:3000/users/';
+ //baseUrl="175.100.138.135/users/"
+
+   baseUrl="https://expensemanager110113.herokuapp.com/users/"
+
   login(data){
     return this.http.post(this.baseUrl+'login',data)
   }

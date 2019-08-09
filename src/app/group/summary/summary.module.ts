@@ -10,10 +10,10 @@ import { HttpService } from 'src/app/http.service';
 import { HttpClientJsonpModule } from '@angular/common/http';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SummaryPage
-  }
+  // {
+  //   path: '',
+  //   component: SummaryPage
+  // }
 ];
 
 @NgModule({

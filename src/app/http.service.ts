@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ExpensesPage } from './group/expenses/expenses.page';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl='http://192.168.0.134:3000/';
+  //  baseUrl='http://192.168.0.134:3000/';
+//  baseUrl="175.100.138.135:3000/"
+  
+baseUrl="https://expensemanager110113.herokuapp.com/"
   constructor(private http:HttpClient) { }
 
   checkMember(data){
@@ -46,5 +49,9 @@ export class HttpService {
   getUsers(IdArray){
     return this.http.post(this.baseUrl+'users/getusers',{IdArray:IdArray})
   
+  }
+  getImage()
+  {
+    return this.http.get("http://192.168.0.134:3000/uploads/2019-08-01T10:06:31.369Zblob")
   }
 }
