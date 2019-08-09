@@ -225,4 +225,8 @@ url
       this.cropper=false   
     }  
   
+
+    forgetPassword(){
+    this.router.navigate(['../forgetpassword'])
+    }
 }

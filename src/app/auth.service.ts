@@ -53,15 +53,21 @@ export class AuthService {
   }
 
 
-  //  baseUrl='http://192.168.0.134:3000/users/';
- //baseUrl="175.100.138.135/users/"
+   baseUrl='http://192.168.0.134:3000/users/';
+//  baseUrl="175.100.138.135/users/"
 
-   baseUrl="https://expensemanager110113.herokuapp.com/users/"
+  //  baseUrl="https://expensemanager110113.herokuapp.com/users/"
 
   login(data){
     return this.http.post(this.baseUrl+'login',data)
   }
   signUp(data){
     return this.http.post(this.baseUrl+'signup',data)
+  }
+  getOTP(email){
+    return this.http.post(this.baseUrl+'getotp',{email:email})
+  }
+  resetPassword(data){
+    return this.http.post(this.baseUrl+'resetpassword',data)
   }
 }

@@ -28,6 +28,7 @@ import { ExpensesPageModule } from './group/expenses/expenses.module';
 import { AddExpencePageModule } from './group/add-expence/add-expence.module';
 import { ProfilePageModule } from './profile/profile.module';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ForgetPasswordPageModule } from './forget-password/forget-password.module';
 
 
 
@@ -38,6 +39,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     
     BrowserModule,
     AngularCropperjsModule,
+    ForgetPasswordPageModule,
     ReactiveFormsModule,
     GroupPageModule,
     PeoplesPageModule,

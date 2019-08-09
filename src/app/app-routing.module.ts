@@ -9,6 +9,7 @@ import { GroupPage } from './group/group/group.page';
 import { ProfilePage } from './profile/profile.page';
 import { SummaryPage } from './group/summary/summary.page';
 import { AuthGuardService } from './auth-guard.service';
+import { ForgetPasswordPage } from './forget-password/forget-password.page';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
     path:'profile',
     component:ProfilePage,
     canActivate:[AuthGuardService]
+  },
+  {
+    path:'forgetpassword',
+    component:ForgetPasswordPage
   }
   ,
   {path:'viewgroup/summary',component:SummaryPage, canActivate:[AuthGuardService]} ,
@@ -52,7 +57,8 @@ const routes: Routes = [
   { path: 'expenses', loadChildren: './group/expenses/expenses.module#ExpensesPageModule' },
   { path: 'add-expence', loadChildren: './group/add-expence/add-expence.module#AddExpencePageModule' },
   { path: 'group', loadChildren: './group/group/group.module#GroupPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' }
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'forget-password', loadChildren: './forget-password/forget-password.module#ForgetPasswordPageModule' }
 ];
 
 @NgModule({
