@@ -15,10 +15,8 @@ export class AuthService {
     });
   }
   ifLoggedIn() {
-   //this.token= localStorage.getItem('token')
   
    if(this.token!==null){
-    console.log(this.token);
     this.authState=true
     this.isAuthenticated()
    }else{
@@ -30,33 +28,20 @@ export class AuthService {
   }
 
   isAuthenticated() {
-   // return this.authState
+  
   }
   loggedIn(token) {
-    // this.token=token;
-    // this.ifLoggedIn()
     
-    
-    //   this.authState=true
-    //   this.router.navigate(['../list'])
-   
   }
  
   loggedOut() {
-      // localStorage.clear()
-      // this.authState=false
-      // this.ifLoggedIn()
-      // this.isAuthenticated()
-  
-     
-   
+    
   }
 
 
-  //  baseUrl='http://192.168.0.134:3000/users/';
+   baseUrl='http://192.168.0.134:3000/users/';
 //  baseUrl="175.100.138.135/users/"
 
-   baseUrl="https://expensemanager110113.herokuapp.com/users/"
 
   login(data){
     return this.http.post(this.baseUrl+'login',data)
@@ -69,5 +54,9 @@ export class AuthService {
   }
   resetPassword(data){
     return this.http.post(this.baseUrl+'resetpassword',data)
+  }
+  updateProfile(formdata){
+    return this.http.patch(this.baseUrl+'update',formdata)
+
   }
 }

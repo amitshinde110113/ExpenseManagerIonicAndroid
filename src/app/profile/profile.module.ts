@@ -9,6 +9,7 @@ import { ImagesService } from '../images.service';
 
 import { ProfilePage } from './profile.page';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 const routes: Routes = [
   // {
@@ -22,6 +23,7 @@ const routes: Routes = [
     
     CommonModule,
     FormsModule,
+    AngularCropperjsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

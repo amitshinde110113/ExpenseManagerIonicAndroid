@@ -6,6 +6,7 @@
       <ion-title slot="start">
         Profile
       </ion-title>
+    <ion-icon (click)="cropper=!cropper" name="create" slot="end" padding></ion-icon>
             
     </ion-toolbar>
     
@@ -14,6 +15,91 @@
  
 
 <ion-content *ngIf="user">
+  
+    <div *ngIf=" cropper">  <ion-avatar *ngIf="!croppedImage" class="avatar"  >
+        <label for="file"> 
+            <i class="ion-images"></i>
+            <input type="file" formControlname="profiePic" id="file" style="display: none" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" (change)="changeListener($event)" data-original-title="upload photos">
+                <ion-icon class="ion-iconUpload" name="camera" padding></ion-icon>
+          </label>
+
+      </ion-avatar>
+        <ion-item>
+           
+                <ion-button ion-button color="danger" slot="start" (click)="reset()">Reset</ion-button>
+             
+           
+                <ion-button ion-button icon-only slot="end" color="danger" (click)="clear()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+                <ion-button ion-button icon-only slot="start" color="secondary" (click)="save()">
+                  <ion-icon name="checkmark"></ion-icon>
+                </ion-button>
+             
+        </ion-item>
+        <angular-cropper #angularCropper [cropperOptions]="cropperOptions" [imageUrl]="myImage" *ngIf="myImage"></angular-cropper>
+    
+      <ion-row *ngIf="myImage">
+        <ion-col col-3>
+          <ion-button size="small"  color="primary" (click)="zoom(true)">
+              <ion-icon name="add-circle-outline"></ion-icon> 
+          </ion-button>
+        </ion-col>
+        
+        <ion-col col-3>
+          <ion-button size="small"  color="primary" (click)="zoom(false)">
+              <ion-icon name="remove-circle-outline"></ion-icon> 
+          </ion-button>
+        </ion-col>
+        <ion-col col-3>
+          <ion-button size="small"  (click)="rotate()">
+              <ion-icon name="refresh"></ion-icon> 
+          </ion-button>
+        </ion-col>
+        <ion-col col-3>
+            <ion-button clear size="small" (click)="scaleY()">
+              Flip
+            </ion-button>
+          </ion-col> 
+      </ion-row>
+      <ion-row *ngIf="myImage">
+         <!-- <ion-col col-2>
+          <ion-button clear (click)="scaleX()">
+            Flip X
+          </ion-button>
+        </ion-col> -->
+       
+    
+        <ion-col col-2>
+          <ion-button size="small" clear icon-only (click)="move(0, -10)">
+            <ion-icon name="arrow-round-up"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col col-2>
+          <ion-button size="small" clear icon-only (click)="move(0, 10)">
+            <ion-icon name="arrow-round-down"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col col-2>
+          <ion-button size="small" clear icon-only (click)="move(-10, 0)">
+            <ion-icon name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col col-2>
+          <ion-button size="small" clear icon-only (click)="move(10, 0)">
+            <ion-icon name="arrow-round-forward"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    
+      <!-- <ion-card *ngIf="croppedImage">
+        <ion-card-header>My Result</ion-card-header>
+        <ion-card-content>
+          <img [src]="croppedImage">
+        </ion-card-content>
+      </ion-card> -->
+    
+      </div >
     <div class="bg" [style.background-image]="'url(' + url + ')'" style="image-orientation: 180deg;">
       </div>
     

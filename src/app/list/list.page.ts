@@ -12,9 +12,8 @@ import { Observable, Observer } from 'rxjs';
 })
 export class ListPage implements OnInit {
   selectedItem: any;admins:any=[]
-//  baseUrl='http://192.168.0.134:3000/'
+ baseUrl='http://192.168.0.134:3000/'
  
-  baseUrl= "https://expensemanager110113.herokuapp.com/"
 
   slideOpts = {
     initialSlide: 1,
@@ -50,33 +49,19 @@ export class ListPage implements OnInit {
         
     let email=localStorage.getItem('user');
     this.httpService.getGroups(email).subscribe((res:any)=>{
-      // this.nativeStorage.setItem('myData', {userDetails: JSON.stringify(res), groups: JSON.stringify(res.groups),})
-      //  .then(
-      //   () => console.log('Stored item!'),
-      //  error => console.error('Error storing item', error)
-      // );
+      
 
-      console.log("res",res,"user",email);
    localStorage.setItem('userDetails',JSON.stringify(res))
       localStorage.setItem('groups',JSON.stringify(res.groups))
       this.groups=res.groups;
-    //  console.log(this.groups);
       this.groups.map((group,idx)=>{
         this.profilePictures.push({group:group.name,user:[]})
      
         group.usr.map(async user=>{
-         // console.log(this.profilePictures.user);
-      //  
-         // localStorage.setItem('profile',base64Image)
-        //  if(email===user.email)
-        //   {
-        //    localStorage.setItem('profile',this.baseUrl+user.profiePic)
-        //   }
+       
 
           this.profilePictures[idx].user.push({name:user.name,email:user.email,url:this.baseUrl+user.profiePic})
-          console.log(this.profilePictures);
           localStorage.setItem('profilePictures',JSON.stringify(this.profilePictures))
-         // this.nativeStorage.setItem('myData', {profilePictures: JSON.stringify(this.profilePictures)})
        
 
           
@@ -112,19 +97,16 @@ export class ListPage implements OnInit {
   }
   setItem(group){
     localStorage.setItem('group',JSON.stringify(group))
-   // console.log(group);
     this.router.navigate(['../viewgroup'])
     
   }
 
   deleteGroup(group){
-   // console.log(group);
    //------------Checking Admin-----------------
     group.users.forEach(user=>{
       if(user.role=="Admin"){
         if(user.email===localStorage.getItem('user')){
            this.httpService.deleteGroup(group).subscribe(res=>{
-           //  console.log("------------------",res);
              this.getData()
       
               })
@@ -143,12 +125,9 @@ export class ListPage implements OnInit {
     
 }
 getFromAlert(data,group) {
-  //console.log(data,group._id);
   if(data.name1!==""){
-    ///console.log(data.name1);
     
     this.httpService.editGroup(group._id,data.name1).subscribe(res=>{
-   //   console.log("-------------",res);
       this.getData()
       this.presentToast("Changed Successfully","success");
     

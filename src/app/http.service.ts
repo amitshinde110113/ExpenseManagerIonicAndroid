@@ -6,10 +6,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HttpService {
-  //  baseUrl='http://192.168.0.134:3000/';
+   baseUrl='http://192.168.0.134:3000/';
 //  baseUrl="175.100.138.135:3000/"
   
-baseUrl="https://expensemanager110113.herokuapp.com/"
   constructor(private http:HttpClient) { }
 
   checkMember(data){

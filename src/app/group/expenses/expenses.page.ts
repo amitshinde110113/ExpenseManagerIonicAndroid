@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./expenses.page.scss'],
 })
 export class ExpensesPage implements OnInit {
-  
+  deleteflag=0
   group_ID:any=JSON.parse(localStorage.getItem('group'))._id
   groups:any=JSON.parse(localStorage.getItem('groups')) ||[]
   flag=1;
@@ -26,25 +26,18 @@ export class ExpensesPage implements OnInit {
          if(group.name===JSON.parse(localStorage.getItem('group')).name)
          { 
            this.expenses=group.expenses
-           console.log("local",group);
-           
          }
        })
       if(this.flag==1){
         this.flag=0;
-        route.params.subscribe(value=>{
-       
-          this.getData()
-          
+        route.params.subscribe(value=>{ 
+         this.getData()      
         })
       }
-       
-   
    }
   
 getData(){
   this.httpService.getExpenses(this.group_ID).subscribe((res:any)=>{
-    console.log("---",res);
   this.expenses=res
   }),err=>{
     
@@ -60,26 +53,37 @@ getData(){
   
     }
     deleteExpense(id,group){
-    //console.log(id,group);
-      let data={id:id,
-        group:group,
-        emails:(JSON.parse(localStorage.getItem('group'))).users}
-      this.httpService.deleteExpense(data).subscribe(res=>{
-        console.log(res);
-        
-        this.presentToast()
-        this.getData()
+    JSON.parse(localStorage.getItem('group')).users.map(user=>{
+      if((user.role=="Admin" ) && (user.email===localStorage.getItem('user'))){
+        let data={id:id,
+          group:group,
+          emails:(JSON.parse(localStorage.getItem('group'))).users}
+        this.httpService.deleteExpense(data).subscribe(res=>{
+          this.deleteflag=1;
+          this.presentToast('Deleted successfully.',"success")
+          this.getData()
+  
+        },err=>{
+          this.presentToast('Oops..something went wrong',"danger")
 
-      })
-     
+        })
+      }
+      
+    })
+    
+     if(this.deleteflag===0){
+      this.presentToast('Oops..only Admin can delete',"danger")
+
+     }
   }
 
- async presentToast() {
+ async presentToast(msg,color) {
       const toast = await this.toaster.create({
-        message: 'Deleted successfully.',
+        message: msg,
         duration: 2000,
         position: 'top',
-        color:'success'
+        color:color
+        
       });
       toast.present();
     }
